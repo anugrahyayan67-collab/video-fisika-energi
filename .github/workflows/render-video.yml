@@ -74,7 +74,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          repository: septiananugrah-ship-it/science-intro
+          repository: anugrahyayan67-collab/science-intro
           path: intro-src
       - uses: actions/setup-node@v4
         with:

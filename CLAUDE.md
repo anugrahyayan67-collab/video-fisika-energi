@@ -1,6 +1,6 @@
 # Konteks repo (untuk asisten AI)
 
-- Video **"Mata Uang Semesta" — Usaha dan Energi** (Fisika Umum, S1 Kimia UNESA) milik **Yayan** (Septian Anugrah Dwi Putra), seri video Fisika Umum pertama. Aturan umum & pelajaran teknis: repo `septiananugrah-ship-it/science-intro` → `CLAUDE.md`.
+- Video **"Mata Uang Semesta" — Usaha dan Energi** (Fisika Umum, S1 Kimia UNESA) milik **Yayan** (Septian Anugrah Dwi Putra), seri video Fisika Umum pertama. Aturan umum & pelajaran teknis: repo `anugrahyayan67-collab/science-intro` → `CLAUDE.md`.
 - Seri berikutnya (repo terpisah, satu materi satu video): **Fluida Statis**, **Fluida Dinamis**, **Momentum**. Modul PDF ada di unggahan pengguna (tidak disimpan di repo); ringkasan angka yang dipakai ada di `naskah/AUDIT.md`.
 - Branding: intro SCIENTIAN "Explore Science with Yayan" (dirender otomatis dari repo `science-intro` di workflow dan ditempel di depan), outro menampilkan SCIENTIAN + "Disusun oleh Septian Anugrah Dwi Putra" (diminta pengguna untuk seri fisika).
 - Gaya **"Lab Energi"** (beda dari video Kimia Kuantum): malam biru tinta + kisi cetak biru, font Space Grotesk (judul/subtitle) + Inter + JetBrains Mono + Source Serif 4 (rumus). **Kode warna energi tetap di seluruh video**: K kinetik = jingga `C.kin`, Ug = biru `C.pot`, Us pegas = ungu `C.spr`, termal = merah `C.heat`, usaha W = hijau `C.work`, gaya F = kuning `C.force`, kata kunci subtitle = emas.
