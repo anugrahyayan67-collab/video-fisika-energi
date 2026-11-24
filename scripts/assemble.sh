@@ -32,12 +32,17 @@ if [ -f intro/intro.mp4 ]; then
   WH=$(ffprobe -v error -select_streams v:0 -show_entries stream=width,height -of csv=s=x:p=0 "$OUT")
   ffmpeg -v error -y -i intro/intro.mp4 -f lavfi -i anullsrc=r=48000:cl=stereo \
     -filter_complex "[0:v]scale=${WH/x/:}:flags=lanczos,fps=30,format=yuv420p[v]" \
-    -map "[v]" -map 0:a? -map 1:a -shortest -c:v libx264 -preset slow -crf 16 -c:a aac -ar 48000 -ac 2 -b:a 256k out/intro-norm.mp4
+    -map "[v]" -map 0:a? -map 1:a -shortest -c:v libx264 -preset slow -crf 16 -c:a aac -ar 48000 -ac 2 -b:a 256k -video_track_timescale 15360 out/intro-norm.mp4
   # hanya satu trek audio: audio intro bila ada, selain itu hening
-  ffmpeg -v error -y -i out/intro-norm.mp4 -map 0:v:0 -map 0:a:0 -c copy out/intro-1a.mp4
-  ffmpeg -v error -y -i "$OUT" -c:v copy -c:a aac -ar 48000 -ac 2 -b:a 256k out/main-48k.mp4
+  ffmpeg -v error -y -i out/intro-norm.mp4 -map 0:v:0 -map 0:a:0 -c copy -video_track_timescale 15360 out/intro-1a.mp4
+  ffmpeg -v error -y -i "$OUT" -c:v copy -c:a aac -ar 48000 -ac 2 -b:a 256k -video_track_timescale 15360 out/main-48k.mp4
   printf "file '%s'\nfile '%s'\n" "$PWD/out/intro-1a.mp4" "$PWD/out/main-48k.mp4" > out/with-intro.txt
   ffmpeg -v error -y -f concat -safe 0 -i out/with-intro.txt -c copy -movflags +faststart out/with-intro.mp4
+  # Cek: durasi video harus = intro + utama (timescale beda membuat bagian utama melambat ±5 fps)
+  VD=$(ffprobe -v error -select_streams v:0 -show_entries stream=duration -of csv=p=0 out/with-intro.mp4)
+  AD=$(ffprobe -v error -select_streams a:0 -show_entries stream=duration -of csv=p=0 out/with-intro.mp4)
+  echo "Durasi video $VD dtk, audio $AD dtk"
+  if awk "BEGIN{exit !($VD - $AD > 2 || $AD - $VD > 2)}"; then echo "Durasi video & audio tidak cocok!"; exit 1; fi
   mv out/with-intro.mp4 "$OUT"
   echo "Intro SCIENTIAN ditempel di depan: $OUT"
   ffprobe -v error -show_entries format=duration,size -of compact "$OUT"
